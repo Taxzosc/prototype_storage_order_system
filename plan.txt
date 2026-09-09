@@ -1,0 +1,18 @@
+how do i plan this out, what is needed for this project to work.
+what is the scope of this project, what is my goal
+
+what i want is to make a program that takes 2 excel sheets, one containing product history, and one containing product database,... ( need more clarification on what i want.)
+
+what does each of these contain:
+product database:
+- a column of numbers, representing a product number
+- a column of names, of said products
+- a column of number in inventory of said products.
+so a row with 3 fields(parts of a column), that contains Product Numbers, names of product, inventory count
+
+product history:
+every movement of each product, wether its to 
+
+
+i need to 
+i need a way to display a screen with info.
