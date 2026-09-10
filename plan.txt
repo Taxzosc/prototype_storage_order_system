@@ -1,17 +1,33 @@
 how do i plan this out, what is needed for this project to work.
 what is the scope of this project, what is my goal
+goal: make a program that holds a database of products, its history, and is able to take productorders.
 
-what i want is to make a program that takes 2 excel sheets, one containing product history, and one containing product database,... ( need more clarification on what i want.)
+what i want is to make a program that takes 2 excel sheets, one containing product history, and one containing product database.
+then using some sort of system where i write in the recipients order number, and the outgoing products number + amount, i alter the product history, and the amounts in database.
+that's the basic idea of the program.
+
+the program i base this on is a microsoft visual basics program using excel. it has multiple "functions", but the basic ones is: sheets with product history, product database and a sheet containing the "program" of placing an order.
 
 what does each of these contain:
 product database:
 - a column of numbers, representing a product number
 - a column of names, of said products
 - a column of number in inventory of said products.
-so a row with 3 fields(parts of a column), that contains Product Numbers, names of product, inventory count
+ex:
+123 | vase | 5
+333 | amphora | 88
 
 product history:
-every movement of each product, wether its to 
+every movement of each product.
+-added 5 vases to database, new count 10
+-removed 8 amphora from database, new count 80, sent to order 23456789
+-removed  1 vase, broken
+
+these are basic examples of the program i want to make right now.
+i can add other functions later, like:
+-moved 5 vases to  shelf 99
+-reserved 99 amphora to customer 456547
+etc.
 
 
 i need to 
