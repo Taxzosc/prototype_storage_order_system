@@ -8,7 +8,7 @@ that's the basic idea of the program.
 
 the program i base this on is a microsoft visual basics program using excel. it has multiple "functions", but the basic ones is: sheets with product history, product database and a sheet containing the "program" of placing an order.
 
-what does each of these contain:
+what does each of these sheets contain:
 product database:
 - a column of numbers, representing a product number
 - a column of names, of said products
@@ -31,4 +31,14 @@ etc.
 
 
 i need to 
-i need a way to display a screen with info.
+i need a way to display a screen with info. a GUI
+    - it has to be interactable, click buttons, type into boxes thats containing order info. 
+    - how do i do this in python? look for package
+        - https://www.geeksforgeeks.org/python/create-first-gui-application-using-python-tkinter/  or https://docs.pysimplegui.com/ (seems to be an offshoot of tinkter)
+        - learn how to credit packages in documentation/code
+
+
+i need to interact with a excel sheet. atleast read and write to it. or have the program be able to store information and output to a excel sheet when needed(example: sending emails to owner containing warehouse status)
+    - Openpyxl https://www.geeksforgeeks.org/python/working-with-excel-spreadsheets-in-python/
+
+figure out the work order: what needs to be done first. figure out screen or make the background functions first.
