@@ -1,0 +1,14 @@
+this is to plan the functions that work in the background
+https://openpyxl.readthedocs.io/en/stable/tutorial.html
+
+
+usable functions for openpyxl
+- load_workbook(filename = "")  ex;  wb = load_workbook(filename = "files/test teoretisk database+historikk.xlsx) https://openpyxl.readthedocs.io/en/stable/api/openpyxl.reader.excel.html#openpyxl.reader.excel.load_workbook
+- check what sheets exists: .sheetnames ex; print(wb.sheetnames)  prints a list of sheetnames
+- choose sheet:
+    - ws = wb["sheet navn"]  ex: history = wb["historikk"]
+- grab value:
+    - ws["cell number"].value
+
+- max column and row:
+    - ws.max_row  or ws.max_col

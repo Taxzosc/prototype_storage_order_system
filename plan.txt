@@ -35,10 +35,23 @@ i need a way to display a screen with info. a GUI
     - it has to be interactable, click buttons, type into boxes thats containing order info. 
     - how do i do this in python? look for package
         - https://www.geeksforgeeks.org/python/create-first-gui-application-using-python-tkinter/  or https://docs.pysimplegui.com/ (seems to be an offshoot of tinkter)
-        - learn how to credit packages in documentation/code
+        - (?)make a spreadsheet in gui, to show the entire product-history and database in program.
+            - i need to figure out the limitations of the gui program.
+    
+    - learn how to credit packages in documentation/code
+    - when its an external program, learn how to get the program to install the dependencies needed
+        
 
 
 i need to interact with a excel sheet. atleast read and write to it. or have the program be able to store information and output to a excel sheet when needed(example: sending emails to owner containing warehouse status)
     - Openpyxl https://www.geeksforgeeks.org/python/working-with-excel-spreadsheets-in-python/
+    - how do i view excel file outside of python program(to verify it works) when i dont have excel liscence. i can upload to google sheets.
+    -   convert to .csv file? vscode extension datawrangler?
 
 figure out the work order: what needs to be done first. figure out screen or make the background functions first.
+background functions first. the gui buttons uses the functions
+
+
+work in a virtual environment to keep dependencies isolated.
+needs pip
+openpyxl
