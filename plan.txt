@@ -47,6 +47,7 @@ i need to interact with a excel sheet. atleast read and write to it. or have the
     - Openpyxl https://www.geeksforgeeks.org/python/working-with-excel-spreadsheets-in-python/
     - how do i view excel file outside of python program(to verify it works) when i dont have excel liscence. i can upload to google sheets.
     -   convert to .csv file? vscode extension datawrangler?
+    NOTE: DATAWRANGLER TAKES TOP ROW AS TITLES AND STARTS THE ROWS FROM 0 INSTEAD OF 1
 
 figure out the work order: what needs to be done first. figure out screen or make the background functions first.
 background functions first. the gui buttons uses the functions

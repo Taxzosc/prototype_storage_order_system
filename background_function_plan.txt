@@ -1,5 +1,8 @@
 this is to plan the functions that work in the background
 https://openpyxl.readthedocs.io/en/stable/tutorial.html
+https://openpyxl.readthedocs.io/en/stable/editing_worksheets.html  deleting/inserting row/columns
+
+NOTE: DATAWRANGLER TAKES TOP ROW AS TITLES AND STARTS THE ROWS FROM 0 INSTEAD OF 1
 
 
 usable functions for openpyxl
@@ -11,4 +14,28 @@ usable functions for openpyxl
     - ws["cell number"].value
 
 - max column and row:
-    - ws.max_row  or ws.max_col
+    - ws.max_row  or ws.max_col, returns an int of the max amount of rows used. goes all the way to the end, so even if everything between 1 and 2000 is empty, it will return 2000
+
+- set cell value to None to delete it. 
+
+- wb.save("filename") to save the document. in this case: wb.save("files/filename")
+
+- to get every value in a column i'd need to loop through it.
+
+
+```
+all_prod_ids = []
+for row in database:
+    if type(row[0].value) != int:
+        continue
+    prod_id = row[0].value
+    all_prod_ids.append(prod_id)
+print(all_prod_ids)
+```
+this checks if the value is a number, saves it to a list, so it skips the title headline, and empty rows( None)
+
+functions to create:
+
+
+- check if ordernumber exists already. takes a ordernumber and a list/set of previous ordernumbers used. copies the list/set,
+- then works with the copied list/set to see if ordernumber is already used. if the list is way to big(makes it slow), use a searching algorithm, 50-50 maybe.
