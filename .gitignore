@@ -1,2 +1,5 @@
 *.xlsx
 .venv/
+test.sh
+__pycache__/
+*.py[cod]
