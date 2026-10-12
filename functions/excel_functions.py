@@ -1,5 +1,6 @@
 from openpyxl import load_workbook, Workbook
 from helper_func import convert_letter_to_index
+from settings import FILE_LOCATION, EXCEL_FILE
 
 
 
@@ -14,15 +15,13 @@ def get_all_saved_unique_ordernumbers(workbook: Workbook, sheetname: str, column
     """
     sheet = workbook[sheetname]
 
-    if column == str:
+    if type(column) == str:
         column = convert_letter_to_index(column)
 
     order_numbers = set()
     for row in sheet:
-        if type(row[column].value) != int:
+        if type(row[column].value) != float:
             continue
         order_number = row[column].value
         order_numbers.add(order_number)
     return order_numbers
-
-
