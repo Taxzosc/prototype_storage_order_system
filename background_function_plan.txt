@@ -38,5 +38,6 @@ this checks if the value is a number, saves it to a list, so it skips the title 
 functions to create:
 
 
-- check if ordernumber exists already. takes a ordernumber and a list/set of previous ordernumbers used. copies the list/set,
-- then works with the copied list/set to see if ordernumber is already used. if the list is way to big(makes it slow), use a searching algorithm, 50-50 maybe.
+- V  check if ordernumber exists already. takes a ordernumber and a list/set of previous ordernumbers used. copies the list/set,
+- V  then works with the copied list/set to see if ordernumber is already used.
+- (maybe) if the list is way to big(makes it slow), use a searching algorithm, 50-50 maybe.
