@@ -41,3 +41,5 @@ functions to create:
 - V  check if ordernumber exists already. takes a ordernumber and a list/set of previous ordernumbers used. copies the list/set,
 - V  then works with the copied list/set to see if ordernumber is already used.
 - (maybe) if the list is way to big(makes it slow), use a searching algorithm, 50-50 maybe.
+    - tested speed of function with 11k ordernumbers, result in roughly 0.4 sec, which is really slow.
+    - searching algorithm it is then. recursive 50-50 search? binary serach.https://www.boot.dev/lessons/ce043580-186d-4ab1-a045-672fd56ac152

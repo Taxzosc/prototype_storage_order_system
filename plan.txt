@@ -2,6 +2,8 @@ how do i plan this out, what is needed for this project to work.
 what is the scope of this project, what is my goal
 goal: make a program that holds a database of products, its history, and is able to take productorders.
 
+source .venv/bin/activate
+
 what i want is to make a program that takes 2 excel sheets, one containing product history, and one containing product database.
 then using some sort of system where i write in the recipients order number, and the outgoing products number + amount, i alter the product history, and the amounts in database.
 that's the basic idea of the program.

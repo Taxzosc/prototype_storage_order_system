@@ -13,6 +13,7 @@ def check_if_already_exists(order_numbers: set, order_number: int|float):  # wor
     
     """
     copy_order_numbers = list(order_numbers.copy())
+    copy_order_numbers.sort()
     if order_number in copy_order_numbers:
         return True
     return False

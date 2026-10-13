@@ -33,4 +33,9 @@ class test_check_if_order_number_is_used(unittest.TestCase):
         extracted_order_nums = get_all_saved_unique_ordernumbers(wb, "Test historikk", "g")
         exists = check_if_already_exists(extracted_order_nums, 2246030)
         self.assertEqual(exists, False)
-        
+
+    def test_ord_num_exists_long_list(self):
+        wb = load_workbook(filename=f"{FILE_LOCATION}/{EXCEL_FILE}")
+        extracted_order_nums = get_all_saved_unique_ordernumbers(wb, "Test historikk lang", "g")
+        exists = check_if_already_exists(extracted_order_nums, 2252742)  #2252742 should be the last number in list.
+        self.assertEqual(exists, True)
