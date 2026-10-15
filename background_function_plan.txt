@@ -35,11 +35,30 @@ print(all_prod_ids)
 ```
 this checks if the value is a number, saves it to a list, so it skips the title headline, and empty rows( None)
 
+
+how does the program function.
+currently: write in ordernumber, write in product number(s), click "find product" which displays
+- the product name(or an error if productnumber doesnt exist), then enter product amount to be withdrawn from database
+then click "submit" which checks if ordernumber has already been used(if it has, error), loops over list, 
+checks again if productnumber exists, then subtracts amount out from database count,
+ then in history it adds date, product number, product name, amount subtracted, new amount number, type of transaction, ordernumber
+ to  a row in excel. [29.05.2026 08:54:00][10001][Bokashistrø, 1 kg][-1][1892][Ordre nettbutikk][2246033]
+ datetime is a string t = datetime.datetime.now()
+output = t.strftime("%d.%m.%Y,%H:%M:%S") = "26.05.2026 09:57:44"
+
+
+for this prototype, i will use a list within a list to represent the order. [ordernumber[productnumber, productname, amount],[productnumber, productname, amount]]
+so list[0] is always ordernumber.
+
+
 functions to create:
 
 
 - V  check if ordernumber exists already. takes a ordernumber and a list/set of previous ordernumbers used. copies the list/set,
 - V  then works with the copied list/set to see if ordernumber is already used.
-- (maybe) if the list is way to big(makes it slow), use a searching algorithm, 50-50 maybe.
-    - tested speed of function with 11k ordernumbers, result in roughly 0.4 sec, which is really slow.
-    - searching algorithm it is then. recursive 50-50 search? binary serach.https://www.boot.dev/lessons/ce043580-186d-4ab1-a045-672fd56ac152
+    -  (maybe) if the list is way to big(makes it slow), use a searching algorithm, 50-50 maybe.
+        - tested speed of function with 11k ordernumbers, result in roughly 0.4 sec, which is really slow.
+        - searching algorithm it is then. recursive 50-50 search? binary serach.https://www.boot.dev/lessons/ce043580-186d-4ab1-a045-672fd56ac152
+            - implemented binary search, it was 0.1 seconds faster. itll have to do for now. optimization can be done when program is finished
+
+- check if productnumber is in database

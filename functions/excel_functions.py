@@ -25,3 +25,37 @@ def get_all_saved_unique_ordernumbers(workbook: Workbook, sheetname: str, column
         order_number = row[column].value
         order_numbers.add(order_number)
     return order_numbers
+
+
+def check_product_number_in_database(workbook: Workbook, sheetname: str, column: str | int, product_number: int|float) -> bool:
+    database = workbook[sheetname]
+
+    if type(column) == str:
+        column = convert_letter_to_index(column)
+
+    for row in database:
+        if type(row[column].value) != float:
+            continue
+
+        if row[column].value == product_number:
+            return True
+    return False
+
+def subtract_product_amount(workbook: Workbook, sheetname: str, product_number: int|float, amount = int):
+    database = workbook[sheetname]
+
+    if type(column) == str:
+        column = convert_letter_to_index(column)
+
+    for i in range(database.max_row):
+        if type(database.cell(row=i, column=1)) != float:
+            continue
+        if database.cell(row=i, column=1).value == product_number:
+            product_cell_value = database.cell(row=i, column=3).value
+            new_value = database.cell(row=i, column=3).value - amount
+            database.cell(row=i, column=3).value = new_value
+
+
+    #     if row[column].value == product_number:
+    #         # row[3] -= amount
+    #         return
