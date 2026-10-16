@@ -47,7 +47,7 @@ checks again if productnumber exists, then subtracts amount out from database co
 output = t.strftime("%d.%m.%Y,%H:%M:%S") = "26.05.2026 09:57:44"
 
 
-for this prototype, i will use a list within a list to represent the order. [ordernumber[productnumber, productname, amount],[productnumber, productname, amount]]
+for this prototype, i will use a list within a list to represent the order. [ordernumber,[productnumber, productname, amount],[productnumber, productname, amount]]
 so list[0] is always ordernumber.
 
 

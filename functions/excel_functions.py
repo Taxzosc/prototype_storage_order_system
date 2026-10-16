@@ -1,10 +1,11 @@
 from openpyxl import load_workbook, Workbook
 from helper_func import convert_letter_to_index
 from settings import FILE_LOCATION, EXCEL_FILE
+import datetime
 
 
 
-def get_all_saved_unique_ordernumbers(workbook: Workbook, sheetname: str, column: str | int) -> set:
+def get_all_saved_unique_ordernumbers(workbook: Workbook, history_sheet_name: str, column: str | int) -> set:
     """Returns a set of order numbers in this sheet
 
     Loops through specified column in sheet to find all ordernumbers
@@ -13,7 +14,7 @@ def get_all_saved_unique_ordernumbers(workbook: Workbook, sheetname: str, column
     assuming alphabet limit of a-z(26 char)
     index 0-25
     """
-    sheet = workbook[sheetname]
+    sheet = workbook[history_sheet_name]
 
     if type(column) == str:
         column = convert_letter_to_index(column)
@@ -27,8 +28,8 @@ def get_all_saved_unique_ordernumbers(workbook: Workbook, sheetname: str, column
     return order_numbers
 
 
-def check_product_number_in_database(workbook: Workbook, sheetname: str, column: str | int, product_number: int|float) -> bool:
-    database = workbook[sheetname]
+def check_product_number_in_database(workbook: Workbook, database_sheet_name: str, column: str | int, product_number: int|float) -> bool:
+    database = workbook[database_sheet_name]
 
     if type(column) == str:
         column = convert_letter_to_index(column)
@@ -41,8 +42,13 @@ def check_product_number_in_database(workbook: Workbook, sheetname: str, column:
             return True
     return False
 
-def subtract_product_amount(workbook: Workbook, sheetname: str, product_number: int|float, amount = int):
-    database = workbook[sheetname]
+def subtract_product_amount(workbook: Workbook, database_sheet_name: str, product_number: int|float, subtractable_amount = int)-> int|float:
+    """Subtracts amount from one product in worksheet, and Returns the new value
+    loops through product database until product is found,
+    then subtracts the subtractable amount from the current amount.
+    
+    """
+    database = workbook[database_sheet_name]
 
     if type(column) == str:
         column = convert_letter_to_index(column)
@@ -51,11 +57,32 @@ def subtract_product_amount(workbook: Workbook, sheetname: str, product_number: 
         if type(database.cell(row=i, column=1)) != float:
             continue
         if database.cell(row=i, column=1).value == product_number:
-            product_cell_value = database.cell(row=i, column=3).value
-            new_value = database.cell(row=i, column=3).value - amount
-            database.cell(row=i, column=3).value = new_value
+            # product_cell_value = database.cell(row=i, column=3).value #does nothing?
+            new_value = database.cell(row=i, column=3).value - subtractable_amount
+            database.cell(row=i, column=3).value = new_value #TODO find out how to write a test for this.
+            return new_value
 
 
-    #     if row[column].value == product_number:
-    #         # row[3] -= amount
-    #         return
+def add_to_bottom_history(workbook: Workbook, history_sheet_name: str, order_number: int|float, order_product: list, new_amount: int|float):
+    """adds a history of a product movement. 
+    limited to "Ordre nettbutikk" for now
+    
+    """#TODO make  this work with other types of movement.
+    history = workbook[history_sheet_name]
+    bottom_empty_row = history.max_row+1
+    time = datetime.datetime.now()
+    prod_number = order_product[0]
+    prod_name = order_product[1]
+    amount_subtracted = -order_product[2]
+    output_datetime = time.strftime("%d.%m.%Y,%H:%M:%S")
+
+    #A:date, B:product number, C:product name, D:amount subtracted, E:new amount number, F:type of transaction, G:ordernumber
+    history[f"A{bottom_empty_row}"] = output_datetime
+    history[f"B{bottom_empty_row}"] = prod_number
+    history[f"C{bottom_empty_row}"] = prod_name
+    history[f"D{bottom_empty_row}"] = amount_subtracted
+    history[f"E{bottom_empty_row}"] = new_amount
+    history[f"F{bottom_empty_row}"] = "Ordre nettbutikk"
+    history[f"G{bottom_empty_row}"] = order_number
+    #TODO add worksheet
+    
