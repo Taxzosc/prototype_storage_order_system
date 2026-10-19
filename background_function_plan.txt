@@ -3,7 +3,8 @@ https://openpyxl.readthedocs.io/en/stable/tutorial.html
 https://openpyxl.readthedocs.io/en/stable/editing_worksheets.html  deleting/inserting row/columns
 
 NOTE: DATAWRANGLER TAKES TOP ROW AS TITLES AND STARTS THE ROWS FROM 0 INSTEAD OF 1
-IMPORTANT, ALL NUMBERS IN EXCEL ARE FLOATS, NO INTS
+//IMPORTANT, ALL NUMBERS IN EXCEL ARE FLOATS, NO INTS//
+FALSE, they can be either or.. at random. or it is the type check of python that does it.
 
 
 usable functions for openpyxl

@@ -21,10 +21,9 @@ def get_all_saved_unique_ordernumbers(workbook: Workbook, history_sheet_name: st
 
     order_numbers = set()
     for row in sheet:
-        if type(row[column].value) != float:
-            continue
-        order_number = row[column].value
-        order_numbers.add(order_number)
+        if type(row[column].value) == float or type(row[column].value) ==int:
+            order_number = row[column].value
+            order_numbers.add(order_number)
     return order_numbers
 
 
@@ -35,11 +34,9 @@ def check_product_number_in_database(workbook: Workbook, database_sheet_name: st
         column = convert_letter_to_index(column)
 
     for row in database:
-        if type(row[column].value) != float:
-            continue
-
-        if row[column].value == product_number:
-            return True
+        if type(row[column].value) == float or type(row[column].value) ==int:
+            if row[column].value == product_number:
+                return True
     return False
 
 def subtract_product_amount(workbook: Workbook, database_sheet_name: str, product_number: int|float, subtractable_amount = int)-> int|float:
@@ -54,13 +51,12 @@ def subtract_product_amount(workbook: Workbook, database_sheet_name: str, produc
         column = convert_letter_to_index(column)
 
     for i in range(database.max_row):
-        if type(database.cell(row=i, column=1)) != float:
-            continue
-        if database.cell(row=i, column=1).value == product_number:
-            # product_cell_value = database.cell(row=i, column=3).value #does nothing?
-            new_value = database.cell(row=i, column=3).value - subtractable_amount
-            database.cell(row=i, column=3).value = new_value #TODO find out how to write a test for this.
-            return new_value
+        if type(database.cell(row=i, column=1)) == float or type(database.cell(row=i, column=1)) == int:
+            if database.cell(row=i, column=1).value == product_number:
+                # product_cell_value = database.cell(row=i, column=3).value #does nothing?
+                new_value = database.cell(row=i, column=3).value - subtractable_amount
+                database.cell(row=i, column=3).value = new_value #TODO find out how to write a test for this.
+                return new_value
 
 
 def add_to_bottom_history(workbook: Workbook, history_sheet_name: str, order_number: int|float, order_product: list, new_amount: int|float):
