@@ -75,6 +75,7 @@ def add_to_bottom_history(workbook: Workbook, history_sheet_name: str, order_num
     limited to "Ordre nettbutikk" for now
     
     """#TODO make  this work with other types of movement. (edit order, warehouse delivery, returns etc)
+    #TODO change how bottom row works. make a function that finds bottom safe row. use "history_grab_bottom_row"
     history = workbook[history_sheet_name]
     bottom_empty_row = history.max_row+1
     time = datetime.datetime.now()
@@ -94,7 +95,19 @@ def add_to_bottom_history(workbook: Workbook, history_sheet_name: str, order_num
     #TODO add worksheet save or not. add the save for code in main under the "submit" loop
     
 
-def history_grab_bottom_row(workbook: Workbook, history_sheet_name: str):
+def history_grab_bottom_row(workbook: Workbook, history_sheet_name: str, max_row: None | int = None)-> list:
+    #made this to check if other functions works, can now change it to be able to find bottom usable row.
     history = workbook[history_sheet_name]
     bottom_empty_row = history.max_row
-    return f"[{history[f"A{bottom_empty_row}"].value},{history[f"B{bottom_empty_row}"].value},{history[f"C{bottom_empty_row}"].value},{history[f"D{bottom_empty_row}"].value},{history[f"E{bottom_empty_row}"].value},{history[f"F{bottom_empty_row}"].value},{history[f"G{bottom_empty_row}"].value}]"
+    if max_row:
+        bottom_empty_row = max_row
+    return [history[f"A{bottom_empty_row}"].value,history[f"B{bottom_empty_row}"].value,history[f"C{bottom_empty_row}"].value,history[f"D{bottom_empty_row}"].value,history[f"E{bottom_empty_row}"].value,history[f"F{bottom_empty_row}"].value,history[f"G{bottom_empty_row}"].value]
+    #change how this works into returning a list?
+
+def find_bottom_usable_row(workbook: Workbook, history_sheet_name: str)-> int|bool:
+    history = workbook[history_sheet_name]
+    bottom_row = history_grab_bottom_row(workbook, history_sheet_name)
+    for cell in bottom_row:
+        if cell != None:
+            return False
+    return #? do i need to recurse until i find the next usable row?
