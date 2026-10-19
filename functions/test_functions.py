@@ -1,7 +1,7 @@
 import unittest
 from openpyxl import load_workbook
 from settings import FILE_LOCATION, EXCEL_FILE
-from excel_functions import get_all_saved_unique_ordernumbers, check_product_number_in_database, subtract_product_amount
+from excel_functions import get_all_saved_unique_ordernumbers, check_product_number_in_database,subtract_product_amount,find_product_amount,add_to_bottom_history
 from helper_func import convert_letter_to_index, check_if_already_exists
 
 class Test_get_all_unique_ordernumbers(unittest.TestCase):
@@ -51,3 +51,27 @@ class test_product_number_exists_in_database(unittest.TestCase):
         wb = load_workbook(filename=f"{FILE_LOCATION}/{EXCEL_FILE}")
         result = check_product_number_in_database(wb,"Test Database",0,21212)
         self.assertEqual(result, False)
+
+class test_product_amounts_from_database(unittest.TestCase):
+    def test_find_product_amount(self):
+        wb = load_workbook(filename=f"{FILE_LOCATION}/{EXCEL_FILE}")
+        value = find_product_amount(wb, "Test Database", 10001)
+        self.assertEqual(value, 1893)
+
+    def test_function_subtract(self):
+        wb = load_workbook(filename=f"{FILE_LOCATION}/{EXCEL_FILE}")
+        old_value = find_product_amount(wb, "Test Database", 10001)
+        print(old_value)
+        new_value = subtract_product_amount(wb, "Test Database", 10001, 5)
+        self.assertEqual(old_value-5, new_value)
+
+class test_add_to_history(unittest.TestCase):
+
+    def test_add_to_bottom(self):
+        wb = load_workbook(filename=f"{FILE_LOCATION}/{EXCEL_FILE}")
+        historikk = wb["Test historikk"]
+        bottom_row = historikk.max_row
+        sim_order = [2246101,[10002,"Bokashistrø, 2 kg",4]]
+        add_to_bottom_history(wb, "Test historikk",sim_order[0],sim_order[1],5)
+        self.assertEqual(bottom_row+1, historikk.max_row)
+        

@@ -1,0 +1,9 @@
+excel_functions->find_product_amount: # TODO needs an error for when it fails to find product. invalid product
+excel_functions->subtract_product_amount: # TODO needs an error for when it fails to find product. invalid product
+excel_functions->add_to_bottom_history: #TODO make  this work with other types of movement. (edit order, warehouse delivery, returns etc)
+
+#BUG say bottom row is 5, next empty is 6, if i add to the bottom row, save document,making max row 6,
+then delete the row and save the document, the max row is still 6..
+max_row is bottom row. check if that bottom row is empty, if it is, use, else go next, check, use?
+
+- general: how to credit copied code.

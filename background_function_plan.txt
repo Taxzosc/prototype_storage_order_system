@@ -1,10 +1,11 @@
 this is to plan the functions that work in the background
 https://openpyxl.readthedocs.io/en/stable/tutorial.html
 https://openpyxl.readthedocs.io/en/stable/editing_worksheets.html  deleting/inserting row/columns
+https://ranjanmp.medium.com/openpyxl-get-maximum-rows-containing-the-data-in-an-excel-sheet-using-python-419ff98384b0 shows error on maxrow
 
 NOTE: DATAWRANGLER TAKES TOP ROW AS TITLES AND STARTS THE ROWS FROM 0 INSTEAD OF 1
 //IMPORTANT, ALL NUMBERS IN EXCEL ARE FLOATS, NO INTS//
-FALSE, they can be either or.. at random. or it is the type check of python that does it.
+FALSE, they can be either or.. at random. or it is the type check of python that does it. best check for int and FLOATSs
 
 
 usable functions for openpyxl

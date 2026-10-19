@@ -26,6 +26,3 @@ def check_if_already_exists(order_numbers: set, order_number: int|float) -> bool
         else:
             high = median -1
     return False
-    # if order_number in copy_order_numbers:
-    #     return True
-    # return False

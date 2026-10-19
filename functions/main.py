@@ -22,3 +22,4 @@ for i in range(1, len(sim_order)): #per product in order
     #now i need to add to history bottom row: date, product number, product name, amount subtracted, new amount number, type of transaction, ordernumber
     add_to_bottom_history(wb,historikk,sim_order[0],sim_order[i],new_amount)
 unique_ordernumbers.add(sim_order[0])
+# add save xlsx line.
