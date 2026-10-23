@@ -95,19 +95,36 @@ def add_to_bottom_history(workbook: Workbook, history_sheet_name: str, order_num
     #TODO add worksheet save or not. add the save for code in main under the "submit" loop
     
 
-def history_grab_bottom_row(workbook: Workbook, history_sheet_name: str, max_row: None | int = None)-> list:
+def history_grab_bottom_or_spesific_row(workbook: Workbook, history_sheet_name: str, row: None | int = None)-> list:
+    """Returns the values of the bottom or the spesified row, between a and g
+    defaults to bottom unless max_row is spesified
+    """
     #made this to check if other functions works, can now change it to be able to find bottom usable row.
     history = workbook[history_sheet_name]
     bottom_empty_row = history.max_row
-    if max_row:
-        bottom_empty_row = max_row
+    if row:
+        bottom_empty_row = row
     return [history[f"A{bottom_empty_row}"].value,history[f"B{bottom_empty_row}"].value,history[f"C{bottom_empty_row}"].value,history[f"D{bottom_empty_row}"].value,history[f"E{bottom_empty_row}"].value,history[f"F{bottom_empty_row}"].value,history[f"G{bottom_empty_row}"].value]
-    #change how this works into returning a list?
 
-def find_bottom_usable_row(workbook: Workbook, history_sheet_name: str)-> int|bool:
-    history = workbook[history_sheet_name]
-    bottom_row = history_grab_bottom_row(workbook, history_sheet_name)
+def find_bottom_usable_row(workbook: Workbook, sheet_name: str, row_number: int = 0)-> int:
+    """Returns the int of the bottom usable row.
+    grabs the inital bottom row using sheet.max_row, checks if its properly empty between col a-col g,
+    if not, it will go to a previous level until it finds a row with anything containing it.
+
+    if any cell in the grabbed row contains a value, it will return that row number+1.
+    
+    this means if all but 1 cell has no value, it will still return this as the bottom row number
+    """
+    sheet = workbook[sheet_name]
+    maxrow = sheet.max_row
+    if maxrow-row_number <= 0: #just incase someone inputs a bad number from the initial call.
+        return 1
+    bottom_row = history_grab_bottom_or_spesific_row(workbook, sheet_name, maxrow+row_number)
+    print(f"maxrow should be{maxrow-row_number}")
+    print(bottom_row)
     for cell in bottom_row:
-        if cell != None:
-            return False
-    return #? do i need to recurse until i find the next usable row?
+        if cell != None: 
+            print("found nonempty cell")
+            return (maxrow+row_number)+1
+    print(f"found no nonempty row going down to level {row_number}")
+    return find_bottom_usable_row(workbook, sheet_name, row_number-1)
