@@ -1,7 +1,7 @@
 import unittest
 from openpyxl import load_workbook
 from settings import FILE_LOCATION, EXCEL_FILE
-from excel_functions import get_all_saved_unique_ordernumbers, check_product_number_in_database,subtract_product_amount,find_product_amount,add_to_bottom_history
+from excel_functions import *
 from helper_func import convert_letter_to_index, check_if_already_exists
 
 class Test_get_all_unique_ordernumbers(unittest.TestCase):
@@ -61,7 +61,6 @@ class test_product_amounts_from_database(unittest.TestCase):
     def test_function_subtract(self):
         wb = load_workbook(filename=f"{FILE_LOCATION}/{EXCEL_FILE}")
         old_value = find_product_amount(wb, "Test Database", 10001)
-        print(old_value)
         new_value = subtract_product_amount(wb, "Test Database", 10001, 5)
         self.assertEqual(old_value-5, new_value)
 
@@ -70,8 +69,9 @@ class test_add_to_history(unittest.TestCase):
     def test_add_to_bottom(self):
         wb = load_workbook(filename=f"{FILE_LOCATION}/{EXCEL_FILE}")
         historikk = wb["Test historikk"]
-        bottom_row = historikk.max_row
+        bottom_row_usable = find_bottom_usable_row(wb, "Test historikk")
         sim_order = [2246101,[10002,"Bokashistrø, 2 kg",4]]
         add_to_bottom_history(wb, "Test historikk",sim_order[0],sim_order[1],5)
-        self.assertEqual(bottom_row+1, historikk.max_row)
+        self.assertEqual(bottom_row_usable, historikk.max_row)
+        # TODO, figure out how to properly test bottom row
         
