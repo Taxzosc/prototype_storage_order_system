@@ -4,3 +4,5 @@ test.sh
 __pycache__/
 *.py[cod]
 ignoretest.py
+main.sh
+test.sh

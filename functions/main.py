@@ -1,26 +1,13 @@
-# this is the main workspace for this project
-import datetime
-from openpyxl import load_workbook
-from settings import FILE_LOCATION, EXCEL_FILE
-from excel_functions import *
-from helper_func import convert_letter_to_index, check_if_already_exists
+# from tkinter import *
+# from tkinter import ttk
 
-wb = load_workbook(filename = f"{FILE_LOCATION}/{EXCEL_FILE}")
-sim_order = [2246101,[10001,"Bokashistrø, 1 kg",2]]
-database = "Test Database"
-historikk = "Test historikk"
-unique_ordernumbers = get_all_saved_unique_ordernumbers(wb, historikk, "g")
+# root = Tk()
+# root.title("Feet to Meters")
 
-#inside submit loop?
-order_number_check = check_if_already_exists(unique_ordernumbers, sim_order[0])
-if order_number_check == True:
-    raise Exception("order number previously used")  #type of error and how its handled will be different in finished program with GUI
-for i in range(1, len(sim_order)): #per product in order
-    product_number = sim_order[i][0]
-    amount = sim_order[i][2]
-    new_amount = subtract_product_amount(wb,historikk, product_number, amount)
-    #now i need to add to history bottom row: date, product number, product name, amount subtracted, new amount number, type of transaction, ordernumber
-    add_to_bottom_history(wb,historikk,sim_order[0],sim_order[i],new_amount)
-unique_ordernumbers.add(sim_order[0])
-print(history_grab_bottom_or_spesific_row(wb, historikk))
-# add save xlsx line.
+# root.mainloop()
+import tkinter
+tkinter._test()
+#_tkinter.TclError: no display name and no $DISPLAY environment variable. can i not run tkinter in a wsl gui?
+#which means i need to run this on windows itself. this is fine, there is no real changes to what im doing i think..
+# i just cant use main.sh and test.sh i think. this program needs to work in windows anyways.
+#TODO figure out how to run this on windows. i need to install python on windows, which should be easy with vscode.
