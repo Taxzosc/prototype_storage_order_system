@@ -3,3 +3,5 @@ excel_functions->subtract_product_amount: # TODO needs an error for when it fail
 excel_functions->add_to_bottom_history: #TODO make  this work with other types of movement. (edit order, warehouse delivery, returns etc)
 test_functions->test_add_to_history: # TODO, figure out how to properly test bottom row
 - general: how to credit copied code.
+
+Tkinter: entry validation(ex: numbers only)

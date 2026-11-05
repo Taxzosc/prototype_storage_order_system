@@ -6,3 +6,6 @@ __pycache__/
 ignoretest.py
 main.sh
 test.sh
+test_gui.py
+feettometerguitest.py
+*.png
