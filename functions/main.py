@@ -3,18 +3,31 @@ from tkinter import ttk
 import re
 from settings import PROGRAM_NAME,MAX_ORDER_ROWS, EXCEL_FILE, FILE_LOCATION
 from excel_functions import *
+from helper_func import check_if_already_exists
 
 wb = load_workbook(filename = f"{FILE_LOCATION}/{EXCEL_FILE}")
+database = "Test Database"
+history = "Test historikk"
 #https://stackoverflow.com/questions/66412903/remove-the-default-0-in-in-integer-entry-in-tkinter
 #how to do the entry as a stringvar and output. aka just cast it to int. that will do it.
 def find_descriptions(*args):
+    order_numbers = get_all_saved_unique_ordernumbers(wb,history,"g")
+    if check_if_already_exists(order_numbers,order_number.get()) == False:
+        valid_invalid_text.set("invalid")
+        return
+    else:
+        valid_invalid_text.set("Valid")
     for i in range(1,MAX_ORDER_ROWS+1):
         value = product_numbers[f"product_number_{i}"].get()
-        product_description = find_product_description(wb, "Test Database", value)
+
+        product_description = find_product_description(wb, database, value)
+
         if product_description == None:
             descriptions[f"item_{i}"].set("ERROR, COULD NOT FIND PRODUCT")
         else:
             descriptions[f"item_{i}"].set(product_description)
+
+
 def check_num(newval):
     return re.match('^[0-9]*$', newval) is not None and len(newval) <= 10
 
@@ -34,9 +47,13 @@ ttk.Label(mainframe, text="pack orders:",padding=(5,5,5,5)).grid(column=1,row=1,
 #order number entry and text
 ttk.Label(mainframe, text="order number:").grid(column=1, row=2,sticky=E)
 order_number = IntVar()
+valid_invalid_text = StringVar()
 order_number_entry = ttk.Entry(mainframe,textvariable=order_number,validate="key",validatecommand=check_num_wrapper)
 order_number_entry.grid(column=2, row=2,sticky=(W,E))
+ttk.Label(mainframe,textvariable=valid_invalid_text).grid(column=3, row=2,sticky=W)
 
+
+#buttons, added to a different frame.
 buttonframe = ttk.Frame(root,padding=(1,71,300,30))
 buttonframe.grid(column=1,row=0,sticky=(N))
 ttk.Button(buttonframe,text="find descriptions",command=find_descriptions,width=20).grid(column=0, row=0,rowspan=2,ipady=11)

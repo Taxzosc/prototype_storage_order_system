@@ -45,7 +45,7 @@ def find_product_amount(workbook: Workbook, database_sheet_name: str, product_nu
     """
     database = workbook[database_sheet_name]
 
-    for i in range(1,database.max_row):
+    for i in range(1,database.max_row+1):
         if type(database.cell(row=i, column=1).value) == float or type(database.cell(row=i, column=1).value) == int:
             if database.cell(row=i, column=1).value == product_number:
                 return database.cell(row=i, column=3).value
@@ -60,7 +60,7 @@ def subtract_product_amount(workbook: Workbook, database_sheet_name: str, produc
     """
     database = workbook[database_sheet_name]
 
-    for i in range(1,database.max_row):
+    for i in range(1,database.max_row+1):
         if type(database.cell(row=i, column=1).value) == float or type(database.cell(row=i, column=1).value) == int:
             if database.cell(row=i, column=1).value == product_number:
                 # product_cell_value = database.cell(row=i, column=3).value #does nothing?
@@ -127,7 +127,7 @@ def find_bottom_usable_row(workbook: Workbook, sheet_name: str, row_number: int 
 
 def find_product_description(workbook: Workbook, sheet_name: str, product_number: int)-> str:
     database = workbook[sheet_name]
-    for i in range(1,database.max_row):
+    for i in range(1,database.max_row+1):
         if database.cell(row=i, column=1).value == product_number:
             return database.cell(row=i, column=2).value
     else:
