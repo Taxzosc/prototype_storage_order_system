@@ -124,3 +124,11 @@ def find_bottom_usable_row(workbook: Workbook, sheet_name: str, row_number: int 
         if cell != None: 
             return (maxrow+row_number)+1
     return find_bottom_usable_row(workbook, sheet_name, row_number-1)
+
+def find_product_description(workbook: Workbook, sheet_name: str, product_number: int)-> str:
+    database = workbook[sheet_name]
+    for i in range(1,database.max_row):
+        if database.cell(row=i, column=1).value == product_number:
+            return database.cell(row=i, column=2).value
+    else:
+        return None

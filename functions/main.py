@@ -1,18 +1,20 @@
 from tkinter import *
 from tkinter import ttk
 import re
-from settings import PROGRAM_NAME,MAX_ORDER_ROWS
+from settings import PROGRAM_NAME,MAX_ORDER_ROWS, EXCEL_FILE, FILE_LOCATION
+from excel_functions import *
 
+wb = load_workbook(filename = f"{FILE_LOCATION}/{EXCEL_FILE}")
 #https://stackoverflow.com/questions/66412903/remove-the-default-0-in-in-integer-entry-in-tkinter
 #how to do the entry as a stringvar and output. aka just cast it to int. that will do it.
 def find_descriptions(*args):
-    # print(product_numbers[f"product_number_1"].get()+3)
     for i in range(1,MAX_ORDER_ROWS+1):
         value = product_numbers[f"product_number_{i}"].get()
-        if value == 0:
-            descriptions[f"item_{i}"].set(None)
+        product_description = find_product_description(wb, "Test Database", value)
+        if product_description == None:
+            descriptions[f"item_{i}"].set("ERROR, COULD NOT FIND PRODUCT")
         else:
-            descriptions[f"item_{i}"].set(value)
+            descriptions[f"item_{i}"].set(product_description)
 def check_num(newval):
     return re.match('^[0-9]*$', newval) is not None and len(newval) <= 10
 
@@ -20,7 +22,9 @@ def check_num(newval):
 root = Tk()
 root.title(f"{PROGRAM_NAME}")
 
-mainframe = ttk.Frame(root,padding=(400,3,400,12))
+check_num_wrapper = (root.register(check_num), '%P')
+
+mainframe = ttk.Frame(root,padding=(400,3,3,12))
 mainframe.grid(column=0,row=0, sticky=(N,S,E,W))
 
 # test=ttk.Label(mainframe,text="test").grid(column=0,row=0)
@@ -30,19 +34,26 @@ ttk.Label(mainframe, text="pack orders:",padding=(5,5,5,5)).grid(column=1,row=1,
 #order number entry and text
 ttk.Label(mainframe, text="order number:").grid(column=1, row=2,sticky=E)
 order_number = IntVar()
-order_number_entry = ttk.Entry(mainframe,textvariable=order_number)
+order_number_entry = ttk.Entry(mainframe,textvariable=order_number,validate="key",validatecommand=check_num_wrapper)
 order_number_entry.grid(column=2, row=2,sticky=(W,E))
 
-#buttons TODO: buttons makes the padding around the entry wonkey, fix by making a 2nd frame?
-ttk.Button(mainframe,text="find descriptions",command=find_descriptions,width=20).grid(column=5, row=4,rowspan=2,ipady=11)
-ttk.Button(mainframe,text="reset form",command=None,width=20).grid(column=5,row=6,rowspan=2,ipady=11)
-ttk.Button(mainframe,text="submit", command=None,width=20).grid(column=5, row=100,rowspan=2,ipady=11)
+buttonframe = ttk.Frame(root,padding=(1,71,300,30))
+buttonframe.grid(column=1,row=0,sticky=(N))
+ttk.Button(buttonframe,text="find descriptions",command=find_descriptions,width=20).grid(column=0, row=0,rowspan=2,ipady=11)
+ttk.Button(buttonframe,text="reset form",command=None,width=20).grid(column=0,row=2,rowspan=2,ipady=11)
+ttk.Button(buttonframe,text="submit", command=None,width=20).grid(column=0, row=100,rowspan=2,ipady=11,pady=50)
+
+
+#buttons todo: buttons makes the padding around the entry wonkey, fix by making a 2nd frame? fixed above
+# ttk.Button(mainframe,text="find descriptions",command=find_descriptions,width=20).grid(column=5, row=4,rowspan=2,ipady=11)
+# ttk.Button(mainframe,text="reset form",command=None,width=20).grid(column=5,row=6,rowspan=2,ipady=11)
+# ttk.Button(mainframe,text="submit", command=None,width=20).grid(column=5, row=100,rowspan=2,ipady=11)
 
 
 orders_sent_today_count = 0
-ttk.Label(mainframe, text="orders sent today:").grid(column=2, row=100, sticky=E)
+ttk.Label(mainframe, text="orders sent today:").grid(column=2, row=100, sticky=(N,E),pady=3)
 orders_sent_today = ttk.Label(mainframe, text=orders_sent_today_count)
-orders_sent_today.grid(column=3, row=100,sticky=W)
+orders_sent_today.grid(column=3, row=100,sticky=W,pady=5)
 
 #product number and amount grid
 ttk.Label(mainframe,text="product number:").grid(column=1, row=3,sticky=E)
@@ -58,7 +69,6 @@ descriptions = {
 product_amounts = {
 
 }
-check_num_wrapper = (root.register(check_num), '%P')
 for i in range(1,MAX_ORDER_ROWS+1):
     product_numbers[f"product_number_{i}"] = IntVar()
     descriptions[f"item_{i}"] = StringVar()
@@ -67,6 +77,16 @@ for i in range(1,MAX_ORDER_ROWS+1):
     ttk.Label(mainframe,textvariable=descriptions[f"item_{i}"]).grid(column=2, row=3+i,sticky=W)
     ttk.Entry(mainframe,textvariable=product_amounts[f"amount_{i}"],validate="key", validatecommand=check_num_wrapper).grid(column=3, row=3+i)
 
+
+#extra config
+
+root.columnconfigure(0,weight=1)
+root.rowconfigure(0,weight=1)
+mainframe.columnconfigure(2, weight=1)
+
+# for child in mainframe.winfo_children():
+#     child.grid_configure(padx=2, pady=2)
+root.mainloop()
 
 # product_number_1 = IntVar()
 # description_1 = StringVar()
@@ -139,13 +159,3 @@ for i in range(1,MAX_ORDER_ROWS+1):
 # ttk.Label(mainframe,textvariable=description_10).grid(column=2, row=13)
 # product_number_10_amount = ttk.Entry(mainframe,textvariable=amount_10).grid(column=3, row=13)
 
-
-#extra config
-
-root.columnconfigure(0,weight=1)
-root.rowconfigure(0,weight=1)
-mainframe.columnconfigure(2, weight=1)
-
-# for child in mainframe.winfo_children():
-#     child.grid_configure(padx=2, pady=2)
-root.mainloop()
