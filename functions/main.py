@@ -13,6 +13,7 @@ history = "Test historikk"
 def find_descriptions(*args):
     order_numbers = get_all_saved_unique_ordernumbers(wb,history,"g")
     if check_if_already_exists(order_numbers,order_number.get()) == False:
+        #TODO if invalid, make the submit button's state unusable?
         valid_invalid_text.set("invalid")
         return
     else:
@@ -27,7 +28,19 @@ def find_descriptions(*args):
         else:
             descriptions[f"item_{i}"].set(product_description)
 
+def reset_form(*args):
+    #i have to reset the form somehow. do i put the creation of the form into a function, call that function as normal,
+    #then if i need to reset the form i call it in the reset form button?
+    # button is pressed->order number entry+ label is reset-> product_numbers, descriptions, product_amounts is reset to empty dicts
+    # then entries and labels for all products is reset.
+    #no, dont nessesarily need to empty dictionary then re-create the whole fields. i just need to set the fields to 0(for intvar)
+    #  or ""(for stringvar). what is saved in the dictionary is updated on the go as the change is happening
+    #Should i make the creation of the ordernum + products fields a separate function?
+    #when i click submit the sameThing should happen
 
+
+    # orders packed today is NOT reset. need a function to check todays date, and orders packed today?
+    pass
 def check_num(newval):
     return re.match('^[0-9]*$', newval) is not None and len(newval) <= 10
 
