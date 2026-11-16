@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from ctypes import windll
 import re
 from settings import PROGRAM_NAME,MAX_ORDER_ROWS, EXCEL_FILE, FILE_LOCATION
 from excel_functions import *
@@ -12,19 +13,20 @@ history = "Test historikk"
 #how to do the entry as a stringvar and output. aka just cast it to int. that will do it.
 def find_descriptions(*args):
     order_numbers = get_all_saved_unique_ordernumbers(wb,history,"g")
-    if check_if_already_exists(order_numbers,order_number.get()) == False:
+    if check_if_already_exists(order_numbers,order_number.get()) == True:
         #TODO if invalid, make the submit button's state unusable?
-        valid_invalid_text.set("invalid")
+        valid_invalid_text.set("invalid/already exists")
         return
     else:
-        valid_invalid_text.set("Valid")
+        valid_invalid_text.set("Valid/does not already exist")
     for i in range(1,MAX_ORDER_ROWS+1):
         value = product_numbers[f"product_number_{i}"].get()
 
         product_description = find_product_description(wb, database, value)
 
         if product_description == None:
-            descriptions[f"item_{i}"].set("ERROR, COULD NOT FIND PRODUCT")
+            continue
+            # descriptions[f"item_{i}"].set("ERROR, COULD NOT FIND PRODUCT")
         else:
             descriptions[f"item_{i}"].set(product_description)
 
@@ -46,6 +48,8 @@ def check_num(newval):
 
 
 root = Tk()
+# windll.shcore.SetProcessDpiAwareness(1) #test for resolution This makes the program not blurry, but also makes it tinier?
+# root.call('tk','scaling',1.5)  #test for resolution
 root.title(f"{PROGRAM_NAME}")
 
 check_num_wrapper = (root.register(check_num), '%P')
