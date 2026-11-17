@@ -31,17 +31,18 @@ def find_descriptions(*args):
             descriptions[f"item_{i}"].set(product_description)
 
 def reset_form(*args):
-    #i have to reset the form somehow. do i put the creation of the form into a function, call that function as normal,
-    #then if i need to reset the form i call it in the reset form button?
-    # button is pressed->order number entry+ label is reset-> product_numbers, descriptions, product_amounts is reset to empty dicts
-    # then entries and labels for all products is reset.
-    #no, dont nessesarily need to empty dictionary then re-create the whole fields. i just need to set the fields to 0(for intvar)
-    #  or ""(for stringvar). what is saved in the dictionary is updated on the go as the change is happening
-    #Should i make the creation of the ordernum + products fields a separate function?
-    #when i click submit the sameThing should happen
+    order_number.set(0)
+    valid_invalid_text.set("")
+    for i in range(1,MAX_ORDER_ROWS+1):
+        product_numbers[f"product_number_{i}"].set(0)
+        descriptions[f"item_{i}"].set("")
+        product_amounts[f"amount_{i}"].set(0)
 
 
     # orders packed today is NOT reset. need a function to check todays date, and orders packed today?
+
+def submit_form(*args):
+    #make sure nothing gets submitted if the form is empty
     pass
 def check_num(newval):
     return re.match('^[0-9]*$', newval) is not None and len(newval) <= 10
@@ -74,7 +75,7 @@ ttk.Label(mainframe,textvariable=valid_invalid_text).grid(column=3, row=2,sticky
 buttonframe = ttk.Frame(root,padding=(1,71,300,30))
 buttonframe.grid(column=1,row=0,sticky=(N))
 ttk.Button(buttonframe,text="find descriptions",command=find_descriptions,width=20).grid(column=0, row=0,rowspan=2,ipady=11)
-ttk.Button(buttonframe,text="reset form",command=None,width=20).grid(column=0,row=2,rowspan=2,ipady=11)
+ttk.Button(buttonframe,text="reset form",command=reset_form,width=20).grid(column=0,row=2,rowspan=2,ipady=11)
 ttk.Button(buttonframe,text="submit", command=None,width=20).grid(column=0, row=100,rowspan=2,ipady=11,pady=50)
 
 
