@@ -16,13 +16,13 @@ def find_descriptions(*args):
     if check_if_already_exists(order_numbers,order_number.get()) == True:
         #TODO if invalid, make the submit button's state unusable?
         valid_invalid_text.set("invalid/already exists")
-        return
+        return 1
     else:
         valid_invalid_text.set("Valid/does not already exist")
     for i in range(1,MAX_ORDER_ROWS+1):
-        value = product_numbers[f"product_number_{i}"].get()
+        product_number = product_numbers[f"product_number_{i}"].get()
 
-        product_description = find_product_description(wb, database, value)
+        product_description = find_product_description(wb, database, product_number)
 
         if product_description == None:
             continue
@@ -30,6 +30,7 @@ def find_descriptions(*args):
         else:
             descriptions[f"item_{i}"].set(product_description)
 
+#resets the form to 0, except the daily packed counter(daily packed not yet implemented properly)
 def reset_form(*args):
     order_number.set(0)
     valid_invalid_text.set("")
@@ -37,13 +38,35 @@ def reset_form(*args):
         product_numbers[f"product_number_{i}"].set(0)
         descriptions[f"item_{i}"].set("")
         product_amounts[f"amount_{i}"].set(0)
-
-
     # orders packed today is NOT reset. need a function to check todays date, and orders packed today?
 
+#submits the form to the excel file, then resets the form
 def submit_form(*args):
     #make sure nothing gets submitted if the form is empty
-    pass
+    #NOTE this assumes the form is correct. so no skipped lines( prod num, 0, prodnum) etc.
+    #TODO add a popup "Are you sure you want to submit" window
+    order_numbers = get_all_saved_unique_ordernumbers(wb,history,"g")
+    if order_number.get() == 0:
+        return
+    if check_if_already_exists(order_numbers,order_number.get()) == True:
+        #TODO (copy from find_description)if invalid, make the submit button's state unusable?
+        valid_invalid_text.set("invalid/already exists")
+        return
+    else:
+        valid_invalid_text.set("Valid/does not already exist")
+
+    for i in range(1,MAX_ORDER_ROWS+1):
+        product_number = product_numbers[f"product_number_{i}"].get()
+        product_description = find_product_description(wb, database, product_number)
+        product_amount = product_amounts[f"amount_{i}"].get()
+        if product_numbers[f"product_number_{i}"].get() == 0 or product_amounts[f"amount_{i}"].get() == 0:
+            break
+        new_amount = subtract_product_amount(wb,history, product_number, product_amount)
+        add_to_bottom_history(wb,history,order_number.get(),product_number,product_description,product_amount,new_amount)
+        print(history_grab_bottom_or_spesific_row(wb,history)) #TODO add a workbook save after submit
+        reset_form()
+
+#checks what key is typed, if key is not in [] it wont get entered into the entries
 def check_num(newval):
     return re.match('^[0-9]*$', newval) is not None and len(newval) <= 10
 
@@ -55,6 +78,7 @@ root.title(f"{PROGRAM_NAME}")
 
 check_num_wrapper = (root.register(check_num), '%P')
 
+#the main frame for the form
 mainframe = ttk.Frame(root,padding=(400,3,3,12))
 mainframe.grid(column=0,row=0, sticky=(N,S,E,W))
 
@@ -76,15 +100,9 @@ buttonframe = ttk.Frame(root,padding=(1,71,300,30))
 buttonframe.grid(column=1,row=0,sticky=(N))
 ttk.Button(buttonframe,text="find descriptions",command=find_descriptions,width=20).grid(column=0, row=0,rowspan=2,ipady=11)
 ttk.Button(buttonframe,text="reset form",command=reset_form,width=20).grid(column=0,row=2,rowspan=2,ipady=11)
-ttk.Button(buttonframe,text="submit", command=None,width=20).grid(column=0, row=100,rowspan=2,ipady=11,pady=50)
+ttk.Button(buttonframe,text="submit", command=submit_form,width=20).grid(column=0, row=100,rowspan=2,ipady=11,pady=50)
 
-
-#buttons todo: buttons makes the padding around the entry wonkey, fix by making a 2nd frame? fixed above
-# ttk.Button(mainframe,text="find descriptions",command=find_descriptions,width=20).grid(column=5, row=4,rowspan=2,ipady=11)
-# ttk.Button(mainframe,text="reset form",command=None,width=20).grid(column=5,row=6,rowspan=2,ipady=11)
-# ttk.Button(mainframe,text="submit", command=None,width=20).grid(column=5, row=100,rowspan=2,ipady=11)
-
-
+#orders sent today labels, not yet properly implemented
 orders_sent_today_count = 0
 ttk.Label(mainframe, text="orders sent today:").grid(column=2, row=100, sticky=(N,E),pady=3)
 orders_sent_today = ttk.Label(mainframe, text=orders_sent_today_count)
@@ -95,6 +113,8 @@ ttk.Label(mainframe,text="product number:").grid(column=1, row=3,sticky=E)
 ttk.Label(mainframe, text="description").grid(column=2, row=3)
 ttk.Label(mainframe,text="amount").grid(column=3,row=3,sticky=W)
 
+
+#this is where all the labels and entries for the product/description/amount goes
 product_numbers= {
 
 }
@@ -114,13 +134,11 @@ for i in range(1,MAX_ORDER_ROWS+1):
 
 
 #extra config
-
 root.columnconfigure(0,weight=1)
 root.rowconfigure(0,weight=1)
 mainframe.columnconfigure(2, weight=1)
 
-# for child in mainframe.winfo_children():
-#     child.grid_configure(padx=2, pady=2)
+#runs the program
 root.mainloop()
 
 # product_number_1 = IntVar()

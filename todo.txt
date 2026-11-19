@@ -3,5 +3,9 @@ excel_functions->subtract_product_amount: # TODO needs an error for when it fail
 excel_functions->add_to_bottom_history: #TODO make  this work with other types of movement. (edit order, warehouse delivery, returns etc)
 test_functions->test_add_to_history: # TODO, figure out how to properly test bottom row
 - general: how to credit copied code.
+main->find_description->#TODO if invalid, make the submit button's state unusable?
+main->submit_form->#NOTE this assumes the form is correct. so no skipped lines( prod num, 0, prodnum) etc.
+main->submit_form->#TODO add a popup "Are you sure you want to submit" window
+main->submit_form->#TODO (copy from find_description)if invalid, make the submit button's state unusable?
 
 Tkinter: entry validation(ex: numbers only)

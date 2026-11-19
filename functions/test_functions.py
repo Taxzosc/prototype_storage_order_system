@@ -70,8 +70,12 @@ class test_add_to_history(unittest.TestCase):
         wb = load_workbook(filename=f"{FILE_LOCATION}/{EXCEL_FILE}")
         historikk = wb["Test historikk"]
         bottom_row_usable = find_bottom_usable_row(wb, "Test historikk")
-        sim_order = [2246101,[10002,"Bokashistrø, 2 kg",4]]
-        add_to_bottom_history(wb, "Test historikk",sim_order[0],sim_order[1],5)
+        # sim_order = [2246101,[10002,"Bokashistrø, 2 kg",4]]
+        order_number = 2246101
+        product_number = 10002
+        product_description = "Bokashistrø, 2 kg"
+        product_amount = 4
+        add_to_bottom_history(wb, "Test historikk",order_number,product_number,product_description,product_amount,5)
         self.assertEqual(bottom_row_usable, historikk.max_row)
         # TODO, figure out how to properly test bottom row
         

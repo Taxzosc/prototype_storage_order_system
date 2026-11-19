@@ -70,7 +70,14 @@ def subtract_product_amount(workbook: Workbook, database_sheet_name: str, produc
     # TODO needs an error for when it fails to find product. invalid product
 
 
-def add_to_bottom_history(workbook: Workbook, history_sheet_name: str, order_number: int|float, order_product: list, new_amount: int|float):
+def add_to_bottom_history(
+        workbook: Workbook,
+        history_sheet_name: str,
+        order_number: int|float,
+        product_number: int,
+        product_description:str,
+        product_amount:int,
+        new_amount: int|float):
     """adds a history of a product movement. 
     limited to "Ordre nettbutikk" for now
     
@@ -79,15 +86,15 @@ def add_to_bottom_history(workbook: Workbook, history_sheet_name: str, order_num
     history = workbook[history_sheet_name]
     bottom_empty_row = find_bottom_usable_row(workbook, history_sheet_name)
     time = datetime.datetime.now()
-    prod_number = order_product[0]
-    prod_name = order_product[1]
-    amount_subtracted = -order_product[2]
+    # prod_number = order_product[0]
+    # prod_name = order_product[1]
+    amount_subtracted = -product_amount
     output_datetime = time.strftime("%d.%m.%Y,%H:%M:%S")
 
     #A:date, B:product number, C:product name, D:amount subtracted, E:new amount number, F:type of transaction, G:ordernumber
     history[f"A{bottom_empty_row}"] = output_datetime
-    history[f"B{bottom_empty_row}"] = prod_number
-    history[f"C{bottom_empty_row}"] = prod_name
+    history[f"B{bottom_empty_row}"] = product_number
+    history[f"C{bottom_empty_row}"] = product_description
     history[f"D{bottom_empty_row}"] = amount_subtracted
     history[f"E{bottom_empty_row}"] = new_amount
     history[f"F{bottom_empty_row}"] = "Ordre nettbutikk"
