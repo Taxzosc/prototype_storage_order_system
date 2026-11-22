@@ -5,7 +5,7 @@ import re
 from settings import PROGRAM_NAME,MAX_ORDER_ROWS, EXCEL_FILE, FILE_LOCATION
 from excel_functions import *
 from helper_func import check_if_already_exists
-
+#TODO add button to add more rows. MAX_ORDER_ROWS += 5?
 wb = load_workbook(filename = f"{FILE_LOCATION}/{EXCEL_FILE}")
 database = "Test Database"
 history = "Test historikk"
