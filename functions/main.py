@@ -5,7 +5,7 @@ import re
 from settings import PROGRAM_NAME,MAX_ORDER_ROWS, EXCEL_FILE, FILE_LOCATION
 from excel_functions import *
 from helper_func import check_if_already_exists
-#TODO add button to add more rows. MAX_ORDER_ROWS += 5?
+#TODO add button to add more rows. MAX_ORDER_ROWS += 5? or combobox that has as many numbers as i need
 wb = load_workbook(filename = f"{FILE_LOCATION}/{EXCEL_FILE}")
 database = "Test Database"
 history = "Test historikk"
@@ -40,6 +40,12 @@ def reset_form(*args):
         product_amounts[f"amount_{i}"].set(0)
     # orders packed today is NOT reset. need a function to check todays date, and orders packed today?
 
+#this function is just for testing
+# def print_bottm(*args):
+#     print(history_grab_bottom_or_spesific_row(wb,history))
+
+def more_rows(*args):
+    MAX_ORDER_ROWS += 5
 #submits the form to the excel file, then resets the form
 def submit_form(*args):
     #make sure nothing gets submitted if the form is empty
@@ -64,7 +70,7 @@ def submit_form(*args):
         new_amount = subtract_product_amount(wb,history, product_number, product_amount)
         add_to_bottom_history(wb,history,order_number.get(),product_number,product_description,product_amount,new_amount)
         print(history_grab_bottom_or_spesific_row(wb,history)) #TODO add a workbook save after submit
-        reset_form()
+    reset_form()
 
 #checks what key is typed, if key is not in [] it wont get entered into the entries
 def check_num(newval):
@@ -77,7 +83,8 @@ root = Tk()
 root.title(f"{PROGRAM_NAME}")
 
 check_num_wrapper = (root.register(check_num), '%P')
-
+# primeframe= ttk.Frame(root).grid(column=0,row=0)
+# canvas = Canvas(primeframe).grid(column=0,row=0)
 #the main frame for the form
 mainframe = ttk.Frame(root,padding=(400,3,3,12))
 mainframe.grid(column=0,row=0, sticky=(N,S,E,W))
@@ -100,7 +107,13 @@ buttonframe = ttk.Frame(root,padding=(1,71,300,30))
 buttonframe.grid(column=1,row=0,sticky=(N))
 ttk.Button(buttonframe,text="find descriptions",command=find_descriptions,width=20).grid(column=0, row=0,rowspan=2,ipady=11)
 ttk.Button(buttonframe,text="reset form",command=reset_form,width=20).grid(column=0,row=2,rowspan=2,ipady=11)
+
+ttk.Button(buttonframe,text="add rows",command=more_rows,width=20).grid(column=0,row=4,rowspan=2,ipady=11)
 ttk.Button(buttonframe,text="submit", command=submit_form,width=20).grid(column=0, row=100,rowspan=2,ipady=11,pady=50)
+
+
+#this button is just for testing
+# ttk.Button(buttonframe,text="printbottm", command=print_bottm,width=20).grid(column=0, row=101,rowspan=2,ipady=11,pady=3)
 
 #orders sent today labels, not yet properly implemented
 orders_sent_today_count = 0
