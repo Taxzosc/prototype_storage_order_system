@@ -1,4 +1,5 @@
 *.xlsx
+!/files/Warehouse.xlsx
 .venv/
 test.sh
 __pycache__/

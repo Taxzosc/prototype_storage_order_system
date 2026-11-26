@@ -1,6 +1,6 @@
 from openpyxl import load_workbook, Workbook
 from helper_func import convert_letter_to_index
-from settings import FILE_LOCATION, EXCEL_FILE
+from settings import FILE_LOCATION, EXCEL_FILE, TYPE_OF_ORDER
 import datetime
 
 
@@ -97,7 +97,7 @@ def add_to_bottom_history(
     history[f"C{bottom_empty_row}"] = product_description
     history[f"D{bottom_empty_row}"] = amount_subtracted
     history[f"E{bottom_empty_row}"] = new_amount
-    history[f"F{bottom_empty_row}"] = "Ordre nettbutikk"
+    history[f"F{bottom_empty_row}"] = TYPE_OF_ORDER
     history[f"G{bottom_empty_row}"] = order_number
     #TODO add worksheet save or not. add the save for code in main under the "submit" loop
     

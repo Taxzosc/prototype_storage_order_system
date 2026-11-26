@@ -58,3 +58,8 @@ background functions first. the gui buttons uses the functions
 work in a virtual environment to keep dependencies isolated.
 needs pip
 openpyxl
+
+
+
+#https://stackoverflow.com/questions/66412903/remove-the-default-0-in-in-integer-entry-in-tkinter
+#how to do the entry as a stringvar and output. aka just cast it to int. that will do it.
