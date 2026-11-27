@@ -1,8 +1,10 @@
 # prototype_storage_order_system
 prototype of a ~~storage and~~ work order system, based on a currently existing program in use at my work that i want to improve in the long term. this project uses openpyxl to handle the excel file, and tkinter for the GUI.
 
-why this is just a prototype:
+why this is **just** a prototype:
 this current version is only meant as a prototype for me to tinker with and learn how i can manipulate an excel file with programming, and how to make usable guis. the full program will have images of the products entered in the work order system, a way to add products to the database, editing previous orders, handle returns, a way to see the whole history of the excel sheet, and more.
+
+there are peices of code in here that does nothing, somethings are commented out, as this is just meant as a learning exercize for me, and reference for the future program i am going to make.
 
 to use this program:
 This program works with an excel file (.xslx) with two sheets: a sheet containing a database of products, and a sheet containing the history of product movements. 

@@ -5,7 +5,7 @@ def convert_letter_to_index(column: str) -> int:
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     return len(alphabet.split(column.lower())[0])
 
-def check_if_already_exists(order_numbers: set, order_number: int|float) -> bool:  # works, but what if order_numbers is big(10k+)
+def check_if_already_exists(order_numbers: set, order_number: int|float) -> bool:
     """Returns True if order_number is in set
 
     takes a set of order_numbers, converts the set to a list and copies it.

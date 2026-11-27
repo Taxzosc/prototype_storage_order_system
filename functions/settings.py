@@ -6,3 +6,6 @@ HISTORY = "History" #insert name of history sheet here in string format. ex: "hi
 
 TYPE_OF_ORDER = "Order" #insert the type of order here, used in excel_functions. ex: "Order from webshop"
 MAX_ORDER_ROWS = 25  #change the amount of rows wanted here
+
+# ORDER_NUMBER_LENGHT_LIMIT = None #does nothing at the moment
+# PRODUCT_NUMBER_LENGHT_LIMIT = None # does nothing at the moment
